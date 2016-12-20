@@ -28,7 +28,7 @@ namespace Cookbook.Controllers
         public ActionResult FacebookLogin(string token)
         {
             WebClient client = new WebClient();
-            string JsonResult = client.DownloadString(string.Concat("https://graph.facebook.com/me?access_token=", token));
+            string JsonResult = client.DownloadString(string.Concat("https://graph.facebook.com/me?access_token=", token, "&fields=first_name,last_name"));
             JObject jsonUserInfo = JObject.Parse(JsonResult);
 
             Session["Ten"] = jsonUserInfo.Value<string>("first_name");
@@ -41,7 +41,7 @@ namespace Cookbook.Controllers
 
             try
             {
-                var json = client.DownloadString(string.Concat("https://graph.facebook.com/me?access_token=", token, "&fields=first_name,last_name")); 
+                var json = client.DownloadString(String.Format("http://server-11.apphb.com/api/NguoiDung/Get/{0}", id)); 
                 var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                 dynamic model = serializer.Deserialize<dynamic>(json);
 
